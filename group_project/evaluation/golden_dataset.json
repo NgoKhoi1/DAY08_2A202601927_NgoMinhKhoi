@@ -2,16 +2,81 @@
   {
     "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong thời hạn bao lâu sau khi nhận hàng?",
     "expected_answer": "Trong vòng 15 ngày kể từ khi giao hàng thành công (24 giờ đối với thực phẩm tươi sống/đông lạnh).",
-    "expected_context": "Trang Returns and Refunds Policy, mục Return/Refund Eligibility"
+    "expected_context": "returns-refund-policy-shopee.md, mục Điều Kiện Yêu Cầu Trả Hàng/Hoàn Tiền"
   },
   {
     "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
-    "expected_answer": "ShopeePay Wallet, thẻ tín dụng/ghi nợ, trả góp qua thẻ, QR Code, chuyển khoản qua app ngân hàng, thẻ NAPAS, Apple Pay, Google Pay, và COD.",
-    "expected_context": "Trang Payment Methods Overview"
+    "expected_answer": "Ví ShopeePay, thẻ tín dụng/ghi nợ, trả góp qua thẻ tín dụng, thanh toán QR, ứng dụng ngân hàng, thẻ nội địa NAPAS, Apple Pay, Google Pay, và thanh toán khi nhận hàng (COD).",
+    "expected_context": "payment-methods-shopee.md"
   },
   {
     "question": "Người bán không được đăng bán những sản phẩm nào?",
-    "expected_answer": "Hàng giả/nhái, sản phẩm bất hợp pháp, vi phạm sở hữu trí tuệ, và các mặt hàng nằm trong danh sách cấm của sàn.",
-    "expected_context": "Trang Product Listing Regulations, mục Prohibited Content"
+    "expected_answer": "Hàng giả/nhái, sản phẩm bất hợp pháp, vi phạm sở hữu trí tuệ, và các mặt hàng nằm trong danh sách cấm/hạn chế của Shopee.",
+    "expected_context": "product-listing-regulations-shopee.md, mục Nội Dung Cấm Đăng Bán"
+  },
+  {
+    "question": "Ai được phép sử dụng tính năng Trả hàng COM (đổi ý)?",
+    "expected_answer": "Chỉ thành viên chương trình khách hàng thân thiết hạng Vàng/Kim Cương, hoặc người dùng đang đăng ký gói ShopeeVIP mới được Trả hàng COM.",
+    "expected_context": "returns-refund-policy-shopee.md, mục Quy Định Bổ Sung Đối Với Trả Hàng COM"
+  },
+  {
+    "question": "Người bán phải phản hồi yêu cầu hoàn tiền trong bao lâu?",
+    "expected_answer": "Người bán cần gửi phản hồi trong vòng 2 ngày lịch kể từ khi nhận được thông báo của Shopee, nếu không sẽ được xem là đồng ý với quyết định hoàn tiền.",
+    "expected_context": "returns-refund-policy-shopee.md, mục Quyền Của Người Bán"
+  },
+  {
+    "question": "Cần chuẩn bị bằng chứng gì khi yêu cầu trả hàng/hoàn tiền?",
+    "expected_answer": "Người mua bắt buộc phải quay video và/hoặc chụp ảnh sản phẩm ngay khi nhận hàng và trong lúc đóng gói sản phẩm hoàn trả để làm bằng chứng đối chiếu.",
+    "expected_context": "returns-refund-policy-shopee.md, mục Yêu Cầu Đối Với Sản Phẩm Hoàn Trả"
+  },
+  {
+    "question": "Ai chịu chi phí vận chuyển khi trả hàng do sản phẩm lỗi?",
+    "expected_answer": "Người bán chịu chi phí vận chuyển trả hàng đối với các trường hợp Shopee chấp thuận không do lỗi người mua, giao không thành công, và các ngoại lệ khác theo quyết định của Shopee.",
+    "expected_context": "returns-refund-policy-shopee.md, mục Trách Nhiệm Về Chi Phí Vận Chuyển Hoàn Trả"
+  },
+  {
+    "question": "Tiền hoàn trả sẽ được chuyển về đâu?",
+    "expected_answer": "Tùy từng trường hợp, tiền hoàn trả được chuyển vào Ví ShopeePay, SPayLater, thẻ nội địa NAPAS, tài khoản ngân hàng, thẻ tín dụng/ghi nợ đã đăng ký, hoặc Số Dư Tài Khoản Shopee.",
+    "expected_context": "returns-refund-policy-shopee.md, mục Hoàn Tiền Đối Với Sản Phẩm Hoàn Trả"
+  },
+  {
+    "question": "Shopee thu thập những loại thông tin cá nhân nào của người dùng?",
+    "expected_answer": "Họ tên, email, ngày sinh, địa chỉ, số điện thoại, thông tin thanh toán, thông tin thiết bị, vị trí, tuỳ chọn liên lạc và lịch sử giao dịch.",
+    "expected_context": "privacy-policy-shopee.md, mục Loại Dữ Liệu Được Thu Thập"
+  },
+  {
+    "question": "Người dùng có thể liên hệ ai để yêu cầu truy cập hoặc chỉnh sửa dữ liệu cá nhân của mình?",
+    "expected_answer": "Người dùng có thể liên hệ dpo.vn@shopee.com để rút lại sự đồng ý, yêu cầu truy cập dữ liệu hoặc chỉnh sửa thông tin cá nhân.",
+    "expected_context": "privacy-policy-shopee.md, mục Quyền Của Người Dùng"
+  },
+  {
+    "question": "Yêu cầu về hình ảnh sản phẩm khi đăng bán trên Shopee là gì?",
+    "expected_answer": "Ảnh phải rõ, chi tiết tình trạng sản phẩm, có ít nhất một ảnh thật do người bán tự chụp với sản phẩm chiếm tối thiểu 40% diện tích ảnh, không chứa yếu tố khoả thân/khiêu dâm.",
+    "expected_context": "product-listing-regulations-shopee.md, mục Hình Ảnh Sản Phẩm"
+  },
+  {
+    "question": "Quy định về hạn sử dụng sản phẩm khi giao hàng là gì?",
+    "expected_answer": "Sản phẩm khi giao đi phải còn tối thiểu 30% thời hạn sử dụng và tối thiểu 30 ngày tính từ hiện tại; nếu dưới 30 ngày phải ghi rõ trong mô tả.",
+    "expected_context": "product-listing-regulations-shopee.md, mục Quy Định Về Hạn Sử Dụng"
+  },
+  {
+    "question": "Làm sao để theo dõi hành trình đơn hàng trên ứng dụng Shopee?",
+    "expected_answer": "Vào mục Tôi -> chọn Đơn Mua -> bấm chọn đơn hàng -> chọn Thông tin vận chuyển để tra cứu trực tiếp trên ứng dụng.",
+    "expected_context": "article_04.md, Hướng Dẫn Theo Dõi Hành Trình Đơn Hàng"
+  },
+  {
+    "question": "Shopee liên kết với những đơn vị vận chuyển nào?",
+    "expected_answer": "SPX Express, Giao Hàng Nhanh (GHN), Giao Hàng Tiết Kiệm (GHTK), Viettel Post và VNPost.",
+    "expected_context": "article_04.md, Các Đơn Vị Vận Chuyển Đối Tác"
+  },
+  {
+    "question": "Điều kiện để đổi phương thức thanh toán cho một đơn hàng là gì?",
+    "expected_answer": "Chỉ đổi được khi đơn hàng đang ở trạng thái Chờ thanh toán và chưa phát sinh mã vận đơn giao hàng.",
+    "expected_context": "article_05.md, Điều Kiện Áp Dụng"
+  },
+  {
+    "question": "Tôi vừa mua một chiếc laptop chơi game giá 30 triệu, làm sao khiếu nại nhà sản xuất laptop nếu máy có lỗi phần cứng?",
+    "expected_answer": "Tôi không thể xác minh thông tin này từ nguồn hiện có.",
+    "expected_context": "Câu hỏi lạc đề / ngoài phạm vi dữ liệu (không có trong knowledge base) — dùng để test khả năng từ chối trả lời khi thiếu evidence."
   }
 ]
