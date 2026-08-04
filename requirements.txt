@@ -10,9 +10,8 @@ crawl4ai>=0.3.0
 markitdown[pdf]>=0.1.0
 fpdf2>=2.7.0
 
-# Task 4 - Chunking & Indexing
+# Task 4 - Chunking & Indexing (embedding qua OpenAI API - xem Task 10)
 langchain-text-splitters>=0.2.0,<0.3.0
-sentence-transformers>=2.2.0
 chromadb>=0.5.0
 
 # Task 6 - BM25 + TF-IDF

@@ -23,7 +23,7 @@ Vector store options:
     - FAISS (chỉ dense search)
 
 Cài đặt:
-    pip install langchain-text-splitters sentence-transformers chromadb
+    pip install langchain-text-splitters chromadb openai
 
 Lưu ý quan trọng: nếu sau này đổi corpus (đổi chủ đề, thêm/bớt tài liệu), phải XÓA
 chroma_db/ cũ trước khi reindex — nếu không, chunk cũ và mới sẽ tồn tại lẫn lộn
@@ -31,7 +31,12 @@ trong cùng collection, retrieval sẽ trả về kết quả rác từ dữ li�
 """
 
 import json
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
 CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
@@ -50,10 +55,10 @@ CHUNK_OVERLAP = 100      # ~12.5% chunk_size — đảm bảo câu văn ở ranh
                          # liên tiếp không bị cắt mất ngữ cảnh phía trước/sau.
 CHUNKING_METHOD = "recursive"  # "recursive" | "markdown_header" | "semantic"
 
-# Embedding: BAAI/bge-m3 — multilingual, xử lý tốt tiếng Việt có dấu (khác với
-# all-MiniLM-L6-v2 vốn chủ yếu train trên tiếng Anh), dimension 1024.
-EMBEDDING_MODEL = "BAAI/bge-m3"
-EMBEDDING_DIM = 1024
+# Embedding: OpenAI text-embedding-3-small (API) — dùng chung API key với Task 10,
+# không cần tải/chạy model local (~2GB), tốc độ ổn định, hỗ trợ đa ngôn ngữ tốt.
+EMBEDDING_MODEL = "text-embedding-3-small"
+EMBEDDING_DIM = 1536
 
 # Vector store: ChromaDB — local, persistent, không cần Docker, hỗ trợ Cosine
 # Similarity Search sẵn cho Task 5.
@@ -137,21 +142,61 @@ def chunk_documents(documents: list[dict]) -> list[dict]:
     return chunks
 
 
+_openai_client = None  # cache singleton
+_EMBED_BATCH_SIZE = 100
+
+
+def _get_openai_client():
+    global _openai_client
+    if _openai_client is None:
+        from openai import OpenAI
+
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise RuntimeError(
+                "Cần OPENAI_API_KEY trong .env để dùng OpenAI Embeddings API "
+                f"(model={EMBEDDING_MODEL})."
+            )
+        _openai_client = OpenAI(api_key=api_key)
+    return _openai_client
+
+
+def embed_texts(texts: list[str]) -> list[list[float]]:
+    """Embed danh sách text bằng OpenAI Embeddings API (batch để tránh vượt giới hạn request)."""
+    if not texts:
+        return []
+    client = _get_openai_client()
+    embeddings: list[list[float]] = []
+    for i in range(0, len(texts), _EMBED_BATCH_SIZE):
+        batch = texts[i : i + _EMBED_BATCH_SIZE]
+        resp = client.embeddings.create(model=EMBEDDING_MODEL, input=batch)
+        embeddings.extend(item.embedding for item in resp.data)
+    return embeddings
+
+
+def get_collection():
+    """Trả về ChromaDB collection đã index ở Task 4 (dùng chung cho Task 5/9)."""
+    import chromadb
+
+    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    return client.get_or_create_collection(
+        name=COLLECTION_NAME,
+        metadata={"hnsw:space": "cosine"},
+    )
+
+
 def embed_chunks(chunks: list[dict]) -> list[dict]:
     """
-    Embed toàn bộ chunks bằng model đã chọn (BAAI/bge-m3).
+    Embed toàn bộ chunks bằng OpenAI Embeddings API (EMBEDDING_MODEL).
 
     Returns:
         Mỗi chunk dict được thêm key 'embedding': list[float]
     """
-    from sentence_transformers import SentenceTransformer
-
-    model = SentenceTransformer(EMBEDDING_MODEL)
     texts = [c["content"] for c in chunks]
-    # normalize_embeddings=True theo khuyến nghị của bge-m3 cho cosine similarity.
-    embeddings = model.encode(texts, show_progress_bar=True, normalize_embeddings=True)
+    embeddings = embed_texts(texts)
     for chunk, emb in zip(chunks, embeddings):
-        chunk["embedding"] = emb.tolist()
+        chunk["embedding"] = emb
     return chunks
 
 
@@ -159,14 +204,7 @@ def index_to_vectorstore(chunks: list[dict]):
     """
     Lưu chunks vào ChromaDB (persistent, local, tại CHROMA_DIR).
     """
-    import chromadb
-
-    CHROMA_DIR.mkdir(parents=True, exist_ok=True)
-    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-    collection = client.get_or_create_collection(
-        name=COLLECTION_NAME,
-        metadata={"hnsw:space": "cosine"},
-    )
+    collection = get_collection()
 
     ids = [
         f"{c['metadata']['type']}_{c['metadata']['source']}_chunk_{c['metadata']['chunk_index']}"
