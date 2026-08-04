@@ -78,9 +78,9 @@ Xem code mẫu (DeepEval/RAGAS/TruLens) chi tiết trong `README.md` gốc mục
 ## Phân Công Công Việc
 
 | Thành viên | MSSV | Nhiệm vụ | Trạng thái |
-|-----------|------|----------|------------|
-| | | | |
-| | | | |
+| Ngô Minh Khôi | 2A202601927 |Task 1 4 8 10|Done|
+| Phạm Quý Đô | 2A202601564 | Task 2 5 9 | Done |
+| Phạm Văn Vượng | 2A202601444 | Task 3 6 7 | Done |
 | | | | |
 | | | | |
 
